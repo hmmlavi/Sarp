@@ -47,9 +47,10 @@ On touch screens, swipe to steer or use the on-screen direction pad. Its center 
 - Combos, Fever Mode, multiple snake skins, and changing weather effects
 - Procedurally generated music and sound effects
 - Achievements and a local top-five score table saved in your browser
+- Optional global all-time and weekly leaderboards using a guest profile; local scores remain separate
 - Keyboard and touch controls
 
-Scores, achievements, and the sound preference are stored locally in your browser. Sarp does not require an account.
+Local scores, achievements, and the sound preference are stored in your browser. Global leaderboard participation uses a guest session and a public username; no email or password is required. Clearing browser data loses that guest identity.
 
 ## Built with
 
