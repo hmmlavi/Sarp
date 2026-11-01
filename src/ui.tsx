@@ -481,13 +481,17 @@ function MuteButton({ muted, onToggleMute }: { muted: boolean; onToggleMute: () 
 }
 
 export function StartScreen({
-  scores,
+  entries,
+  status,
+  username,
   muted,
   onStart,
   onToggleMute,
   isTouch,
 }: {
-  scores: ScoreEntry[];
+  entries: GlobalScore[];
+  status: "idle" | "loading" | "ready" | "error";
+  username: string | null;
   muted: boolean;
   onStart: () => void;
   onToggleMute: () => void;
@@ -581,7 +585,7 @@ export function StartScreen({
             </div>
           </div>
 
-          {/* right — high scores */}
+          {/* right — live global leaderboard */}
           <div
             className="panel p-4 rise-in"
             style={{ animationDelay: "120ms" }}
@@ -589,10 +593,36 @@ export function StartScreen({
           >
             <div className="flex items-center gap-2 text-gold-400 mb-2">
               <IconTrophy className="w-4 h-4" />
-              <h2 className="font-display text-sm tracking-[0.2em]">HIGH SCORES</h2>
+              <h2 className="font-display text-sm tracking-[0.2em]">GLOBAL LEADERBOARD</h2>
               <span className="ml-auto text-[10px] text-milk-dim font-semibold">TOP 5</span>
             </div>
-            <ScoreTable scores={scores} limit={5} />
+            {status === "loading" && <p className="py-8 text-center text-xs text-milk-dim">Loading world rankings…</p>}
+            {status === "error" && <p className="py-8 text-center text-xs text-gold-300">Leaderboard temporarily unavailable.</p>}
+            {status === "ready" && (
+              <>
+                {entries.filter((entry) => entry.rank <= 5).length === 0
+                  ? <p className="py-6 text-center text-xs text-milk-dim">No global scores yet. Be the first!</p>
+                  : entries.filter((entry) => entry.rank <= 5).map((entry) => (
+                    <div key={entry.rank + ":" + entry.username} className={cn("flex items-center gap-2 border-b border-pine-800 py-2 px-1", entry.is_you && "bg-neon-400/10 rounded")}>
+                      <span className="w-7 font-display text-sm text-gold-300">#{entry.rank}</span>
+                      <span className="min-w-0 flex-1 truncate text-xs font-bold text-milk">{entry.username}{entry.is_you ? " (YOU)" : ""}</span>
+                      <span className="font-display text-sm tabular text-neon-300">{entry.score.toLocaleString()}</span>
+                    </div>
+                  ))}
+                {(() => {
+                  const mine = entries.find((entry) => entry.is_you);
+                  return mine
+                    ? <div className="mt-3 rounded-md border border-neon-400/40 bg-neon-400/10 px-3 py-2">
+                        <div className="text-[9px] font-bold tracking-[0.2em] text-neon-300">YOUR RANKING</div>
+                        <div className="mt-1 flex items-center justify-between gap-2">
+                          <span className="truncate text-xs font-bold text-milk">{mine.username}</span>
+                          <span className="shrink-0 font-display text-sm text-gold-300">#{mine.rank} · {mine.score.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    : <p className="mt-3 text-center text-[10px] text-milk-dim">{username ? "Play a run to get your ranking." : "Set a player name and play to get ranked."}</p>;
+                })()}
+              </>
+            )}
           </div>
         </div>
       </div>
