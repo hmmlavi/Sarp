@@ -47,9 +47,27 @@ On touch screens, swipe to steer or use the on-screen direction pad. Its center 
 - Combos, Fever Mode, multiple snake skins, and changing weather effects
 - Procedurally generated music and sound effects
 - Achievements and a local top-five score table saved in your browser
+- Optional global **all-time and weekly leaderboards** with guest profiles
+- Top 10 world rankings plus your own world rank, even when you are outside the Top 10
+- Dense ranking for tied scores, with the earlier achieved score listed first
+- Weekly leaderboard resets every Monday at 00:00 UTC
+- Server-side username moderation and score-submission checks
 - Keyboard and touch controls
 
-Scores, achievements, and the sound preference are stored locally in your browser. Sarp does not require an account.
+## Global leaderboard
+
+Sarp now supports an optional worldwide leaderboard. The first time you start a run, choose a public username (3–16 characters; letters, numbers, and underscores). You can change it later from the main menu. Usernames do not need to be unique because each guest player has a separate, private guest ID.
+
+The leaderboard has two views:
+
+- **All-time** — each player's best submitted score.
+- **This week** — each player's best score for the current UTC week, beginning Monday at 00:00 UTC.
+
+Only a new personal-best run is submitted. Tied scores share the same rank; the earlier achieved score is shown first. The leaderboard displays the Top 10 and separately shows your own rank if you are outside the Top 10.
+
+Global participation uses an anonymous guest session—no email, password, or social account is required. Your username is public; your guest ID is not displayed. Guest identity is stored in this browser, so clearing site data or switching devices loses access to that guest profile. There is no account recovery.
+
+Local scores and achievements remain stored separately in your browser and continue to work if the online leaderboard is unavailable. If the service or your connection is down, Sarp displays **Leaderboard unavailable** and gameplay remains playable.
 
 ## Built with
 
