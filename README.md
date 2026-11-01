@@ -1,117 +1,167 @@
-# Sarp
+<div align="center">
 
-**A 3D browser game inspired by classic Snake.** Eat apples, steer through the arena, and keep going as the pace rises. The 10th apple, then every 15th after that, spawns a Rainbow Apple and a short burst of Rainbow Mode.
+# 🐍 Sarp
+
+### A fast-paced 3D Snake game with a little more personality.
+
+Eat. Grow. Chase the next high score.
+
+[**▶ Play Sarp**](https://sarp3d.vercel.app/) · [Report a bug](https://github.com/hmmlavi/Sarp/issues) · [View source](https://github.com/hmmlavi/Sarp)
+
+![Version](https://img.shields.io/badge/version-1.1.1-7c5cff?style=for-the-badge)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=111827)
+![Three.js](https://img.shields.io/badge/Three.js-3D-black?style=for-the-badge&logo=threedotjs)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+
+</div>
+
+---
+
+## 🎮 What is Sarp?
+
+Sarp is a browser-based 3D take on the classic Snake game. Guide your snake around a compact arena, collect apples, build combos, and survive as the pace gets faster. Special apples, changing weather, sound, skins, achievements, and worldwide leaderboards make every run a little different.
+
+No installation or account is needed to play. Open the game and start a run.
 
 <p align="center">
-  <a href="https://sarp3d.vercel.app/"><strong>▶ Play Sarp online</strong></a>
+  <img src="docs/screenshots/menu.png" alt="Sarp main menu" width="800">
 </p>
 
-<p align="center">
-  <img src="docs/screenshots/menu.png" alt="Sarp main menu" width="720">
-</p>
+## ✨ Highlights
 
-## Screenshots
+- **3D arena** — a 21 × 21 grid with smooth movement and an increasingly quick pace.
+- **Special apples** — Classic, Golden, Magnet, and milestone Rainbow Apples.
+- **Fever & combos** — keep a streak going and push your score higher.
+- **Personal style** — multiple snake skins and changing weather effects.
+- **Sound** — procedurally generated music and sound effects, with an in-game toggle.
+- **Achievements** — milestones to chase and a local top-five leaderboard.
+- **World leaderboard** — optional all-time and weekly rankings using anonymous guest profiles.
+- **Touch-friendly** — swipe controls and an on-screen direction pad for mobile.
 
-### Gameplay
+## 📸 Screenshots
 
-![Sarp gameplay showing the arena, snake, apple, and score HUD](docs/screenshots/gameplay.png)
+| Main menu | Gameplay |
+|:---:|:---:|
+| ![Main menu](docs/screenshots/menu.png) | ![Gameplay](docs/screenshots/gameplay.png) |
 
-### Game over
+| Game over | Mobile gameplay |
+|:---:|:---:|
+| ![Game over](docs/screenshots/game-over.png) | ![Mobile gameplay](docs/screenshots/mobile-gameplay.png) |
 
-![Sarp game-over screen with score and replay controls](docs/screenshots/game-over.png)
+## 🕹️ How to play
 
-### Narrow screen
+1. Start a run and steer around the arena.
+2. Collect apples to grow and increase your score.
+3. Avoid the walls and your own body.
+4. Watch your speed: it increases as the run continues.
+5. Hit milestones, discover special apples, and beat your best score.
 
-![Sarp gameplay displayed in a narrow mobile-sized viewport](docs/screenshots/mobile-gameplay.png)
+### Keyboard controls
 
-## How to play
+| Key | Action |
+|:---|:---|
+| ↑ ↓ ← → or W A S D | Steer |
+| Space / P / Esc | Pause or resume |
+| R | Restart |
+| M | Toggle sound |
+| Q | Return to menu while paused |
 
-Collect apples to grow and score. Avoid the arena walls and your own body. The speed increases over time, so plan turns ahead.
+**Mobile:** Swipe in the direction you want to move, or use the on-screen direction pad. The center button pauses the game.
 
-### Keyboard
+## 🌍 Global leaderboard
 
-| Keys | Action |
-| --- | --- |
-| Arrow keys or **W A S D** | Steer |
-| **Space**, **P**, or **Esc** | Pause or resume |
-| **R** | Restart |
-| **M** | Toggle sound |
-| **Q** | Return to the menu while paused |
+Sarp includes optional worldwide **All-time** and **This week** leaderboards.
 
-On touch screens, swipe to steer or use the on-screen direction pad. Its center button pauses the game.
+- Choose a public username when starting your first run. Usernames are 3–16 characters and can contain letters, numbers, and underscores.
+- No email, password, or social login is needed. Sarp uses an anonymous guest session.
+- Only a new personal-best run is submitted.
+- The board shows the Top 10 and your own rank if you are outside the Top 10.
+- Tied scores share a rank; the earlier achieved score appears first.
+- Weekly rankings reset every Monday at 00:00 UTC.
 
-## Features
+**A note about guest profiles:** Your guest identity is stored in this browser. Clearing site data or switching devices means you will lose access to that guest profile; there is currently no account recovery. Your username is public, but your guest ID is not shown.
 
-- A 3D snake arena with a 21 × 21 grid and an increasingly quick pace
-- Classic apples, occasional Golden and Magnet Apples, and milestone Rainbow Apples
-- Combos, Fever Mode, multiple snake skins, and changing weather effects
-- Procedurally generated music and sound effects
-- Achievements and a local top-five score table saved in your browser
-- Optional global **all-time and weekly leaderboards** with guest profiles
-- Top 10 world rankings plus your own world rank, even when you are outside the Top 10
-- Dense ranking for tied scores, with the earlier achieved score listed first
-- Weekly leaderboard resets every Monday at 00:00 UTC
-- Server-side username moderation and score-submission checks
-- Keyboard and touch controls
+Local scores and achievements are stored separately in your browser. If the online service or your connection is unavailable, local gameplay remains playable.
 
-## Global leaderboard
+## 🧰 Run locally
 
-Sarp now supports an optional worldwide leaderboard. The first time you start a run, choose a public username (3–16 characters; letters, numbers, and underscores). You can change it later from the main menu. Usernames do not need to be unique because each guest player has a separate, private guest ID.
+### Requirements
 
-The leaderboard has two views:
+- Node.js 20.19+ or 22.12+
+- npm
 
-- **All-time** — each player's best submitted score.
-- **This week** — each player's best score for the current UTC week, beginning Monday at 00:00 UTC.
+### Setup
 
-Only a new personal-best run is submitted. Tied scores share the same rank; the earlier achieved score is shown first. The leaderboard displays the Top 10 and separately shows your own rank if you are outside the Top 10.
-
-Global participation uses an anonymous guest session—no email, password, or social account is required. Your username is public; your guest ID is not displayed. Guest identity is stored in this browser, so clearing site data or switching devices loses access to that guest profile. There is no account recovery.
-
-Local scores and achievements remain stored separately in your browser and continue to work if the online leaderboard is unavailable. If the service or your connection is down, Sarp displays **Leaderboard unavailable** and gameplay remains playable.
-
-## Built with
-
-React 19, TypeScript 5.9, Three.js 0.186, Tailwind CSS 4, and Vite 7. The Vite build uses `vite-plugin-singlefile` to bundle the browser game into a self-contained HTML file.
-
-## Run locally
-
-You’ll need Node.js 20.19+ (or 22.12+) and npm.
-
-```bash
+~~~bash
 git clone https://github.com/hmmlavi/Sarp.git
 cd Sarp
 npm install
 npm run dev
-```
+~~~
 
-Open the local URL printed by Vite. To create and preview a production build:
+Open the local address printed by Vite.
 
-```bash
+### Production build
+
+~~~bash
 npm run build
 npm run preview
-```
+~~~
 
-The build is written to `dist/` and can be served as a static site.
+The production output is generated in the dist/ directory and can be hosted as a static site.
 
-## Project layout
+## 🧱 Tech stack
 
-```text
+| Technology | Role |
+|:---|:---|
+| React 19 | UI and application state |
+| TypeScript 5.9 | Type-safe application code |
+| Three.js 0.186 | 3D game rendering |
+| Tailwind CSS 4 | Styling |
+| Vite 7 | Development server and production build |
+| vite-plugin-singlefile | Bundles the game into a self-contained HTML file |
+
+## 🗂️ Project structure
+
+~~~text
 src/
-  App.tsx          Game state, input, and screen flow
-  ui.tsx           Menus, HUD, and overlays
-  index.css        App styling
-  game/            Three.js engine, effects, audio, scores, and achievements
-  online/          Guest sessions and global leaderboard UI/API client
-  utils/           Shared utilities
+├── App.tsx          # Game state, input, and screen flow
+├── ui.tsx           # Menus, HUD, and overlays
+├── index.css        # Global styling
+├── game/            # Three.js engine, effects, audio, scores, achievements
+├── online/          # Guest sessions and global leaderboard client
+└── utils/           # Shared utilities
+
 docs/
-  screenshots/     Captures of the deployed game
-  social-preview.png  Repository social preview image
-```
+├── screenshots/     # Game screenshots
+└── social-preview.png
+~~~
 
-## Credits
+## 🛠️ Contributing
 
-Sarp is created by [Lavi](https://github.com/hmmlavi).
+Found a bug or have an idea? Open an [issue](https://github.com/hmmlavi/Sarp/issues) with steps to reproduce it, or submit a pull request.
 
-## License
+For meaningful changes:
+1. Keep the game playable if online features are unavailable.
+2. Avoid breaking local scores and achievements.
+3. Test the production build with npm run build.
+4. Include screenshots or a short recording for visual changes.
 
-No license is currently included in this repository. Check with the author before redistributing or reusing the project.
+## 📋 Version history
+
+See the [changelog](CHANGELOG.md) for release notes and notable changes.
+
+## 👤 Created by
+
+**Lavi** · [GitHub @hmmlavi](https://github.com/hmmlavi)
+
+---
+
+<div align="center">
+
+**Thanks for checking out Sarp. Have fun, and beat your best!**
+
+[▶ Play now](https://sarp3d.vercel.app/)
+
+</div>
