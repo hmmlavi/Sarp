@@ -475,10 +475,10 @@ export default function App() {
       if (screen === "menu") {
         if (dir) {
           e.preventDefault();
-          startGame(dir);
+          void handleStart();
         } else if (k === " " || k === "Enter") {
           e.preventDefault();
-          if (!e.repeat) startGame();
+          if (!e.repeat) void handleStart();
         } else if (k === "m" || k === "M") doToggleMute();
       } else if (screen === "playing") {
         if (dir) {
@@ -515,7 +515,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [screen, startGame, pauseGame, resumeGame, quitToMenu, doToggleMute]);
+  }, [screen, startGame, handleStart, pauseGame, resumeGame, quitToMenu, doToggleMute]);
 
   /* ---------------- swipe steering ---------------- */
 
