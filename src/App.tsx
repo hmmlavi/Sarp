@@ -486,6 +486,14 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const isTextEntry =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target?.isContentEditable === true;
+      // Never let game shortcuts intercept text being typed into nickname or other fields.
+      if (isTextEntry || usernameOpen) return;
+
       ensureAudio();
       const dir = KEY_DIRS[e.key];
       const k = e.key;
@@ -532,7 +540,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [screen, startGame, handleStart, pauseGame, resumeGame, quitToMenu, doToggleMute]);
+  }, [screen, usernameOpen, startGame, handleStart, pauseGame, resumeGame, quitToMenu, doToggleMute]);
 
   /* ---------------- swipe steering ---------------- */
 
