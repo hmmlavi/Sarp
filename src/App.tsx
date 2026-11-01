@@ -78,7 +78,6 @@ export default function App() {
   const [onlineNotice, setOnlineNotice] = useState("");
   const [finalStats, setFinalStats] = useState({ score: 0, apples: 0, length: 4 });
   const [isNewBest, setIsNewBest] = useState(false);
-  const [highlightId, setHighlightId] = useState<string | null>(null);
   const [muted, setMutedState] = useState(() => isMuted());
   const [popups, setPopups] = useState<Popup[]>([]);
   const [flashKey, setFlashKey] = useState(0);
@@ -217,7 +216,6 @@ export default function App() {
       };
       const { list, rank } = saveScore(entry);
       setScores(list);
-      setHighlightId(entry.id);
       const best = rank === 0 && e.score > 0;
       setIsNewBest(best);
       setFlashKey((f) => f + 1);
