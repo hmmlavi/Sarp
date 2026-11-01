@@ -3,7 +3,8 @@
 -- 20261101165406, 20261101165431, 20261101165526 and
 -- 2026110117xxxxxx (unify_username_validation).
 -- This file is documentation/schema bootstrap SQL; production changes are tracked
--- in Supabase migration history.
+-- in Supabase migration history. The username validation follow-up migration
+-- is named unify_username_validation in the live project.
 
 create table public.sarp_players (
   id uuid primary key references auth.users(id) on delete cascade,
