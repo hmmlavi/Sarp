@@ -299,6 +299,7 @@ export class SnakeEngine {
 
   private raf = 0;
   private last = performance.now();
+  private lastDemoRender = 0;
 
   constructor(canvas: HTMLCanvasElement, onEvent: (e: EngineEvent) => void) {
     this.onEvent = onEvent;
@@ -308,7 +309,7 @@ export class SnakeEngine {
       powerPreference: "high-performance",
     });
     const coarse = window.matchMedia?.("(pointer: coarse)").matches ?? false;
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.8 : 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.35));
     this.renderer.setClearColor(0x04120c);
 
     this.camera = new THREE.PerspectiveCamera(48, 1, 0.1, 120);
@@ -2030,7 +2031,10 @@ export class SnakeEngine {
     this.fireflyMat.opacity =
       0.38 + Math.sin(this.tGlobal * 1.6) * 0.14 + this.discoMix * 0.22;
 
-    this.renderer.render(this.scene, this.camera);
+    if (this.state !== "demo" || now - this.lastDemoRender >= 1000 / 30) {
+      this.renderer.render(this.scene, this.camera);
+      if (this.state === "demo") this.lastDemoRender = now;
+    }
   };
 
   private ensureSegs(n: number) {
