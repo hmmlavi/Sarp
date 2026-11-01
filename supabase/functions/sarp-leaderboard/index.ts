@@ -38,9 +38,6 @@ Deno.serve(async (req: Request) => {
     if (body?.action === "profile_save") {
       const username = typeof body.username === "string" ? body.username.trim() : "";
       if (!/^[A-Za-z0-9_]{3,16}$/.test(username)) return json({ error: "Username must be 3–16 characters using letters, numbers, or _." }, 400);
-      const { data: existing, error: readError } = await admin.from("sarp_players").select("updated_at").eq("id", user.id).maybeSingle();
-      if (readError) throw readError;
-      if (existing && Date.now() - new Date(existing.updated_at).getTime() < 10000) return json({ error: "Please wait a few seconds before changing your username again." }, 429);
       const { data, error } = await admin.from("sarp_players").upsert({ id: user.id, username }, { onConflict: "id" }).select("id, username, created_at, updated_at").single();
       if (error) {
         if (String(error.message).toLowerCase().includes("username")) return json({ error: "That username is not allowed. Please choose another." }, 400);
