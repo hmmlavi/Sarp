@@ -3,6 +3,7 @@ import type { ReactNode, PointerEvent as RPointerEvent, MouseEvent as RMouseEven
 import { cn } from "./utils/cn";
 import type { DirName } from "./game/engine";
 import type { ScoreEntry } from "./game/scores";
+import type { GlobalScore } from "./online/leaderboard";
 
 /* ------------------------------------------------- icons */
 
