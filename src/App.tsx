@@ -6,6 +6,8 @@ import { MusicEngine, type MusicMood } from "./game/music";
 import { loadUnlocked, unlock, achievementById } from "./game/achievements";
 import { STAGE_DUR } from "./game/worldfx";
 import { cn } from "./utils/cn";
+import { getGuestProfile, saveGuestUsername, getGlobalLeaderboard, submitGlobalScore, type GuestProfile, type GlobalScore } from "./online/leaderboard";
+import { UsernamePanel, LeaderboardPanel } from "./online/LeaderboardPanels";
 import {
   StartScreen,
   PauseScreen,
@@ -62,6 +64,18 @@ export default function App() {
   const [mult, setMult] = useState(1);
   const [speedPct, setSpeedPct] = useState(0);
   const [scores, setScores] = useState<ScoreEntry[]>(() => loadScores());
+  const [guestProfile, setGuestProfile] = useState<GuestProfile | null>(null);
+  const [usernameOpen, setUsernameOpen] = useState(false);
+  const [usernameValue, setUsernameValue] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [usernameSaving, setUsernameSaving] = useState(false);
+  const [pendingStart, setPendingStart] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [leaderboardPeriod, setLeaderboardPeriod] = useState<"all_time" | "weekly">("all_time");
+  const [globalEntries, setGlobalEntries] = useState<GlobalScore[]>([]);
+  const [leaderboardStatus, setLeaderboardStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [leaderboardError, setLeaderboardError] = useState("");
+  const [onlineNotice, setOnlineNotice] = useState("");
   const [finalStats, setFinalStats] = useState({ score: 0, apples: 0, length: 4 });
   const [isNewBest, setIsNewBest] = useState(false);
   const [highlightId, setHighlightId] = useState<string | null>(null);
@@ -208,8 +222,14 @@ export default function App() {
       setIsNewBest(best);
       setFlashKey((f) => f + 1);
       setScreen("over");
-      if (best) sfx.best();
-      else sfx.over();
+      if (best) {
+        sfx.best();
+        if (guestProfile) {
+          void submitGlobalScore(e.score, e.apples, e.length).catch((error) => {
+            setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
+          });
+        }
+      } else sfx.over();
     }
   };
 
@@ -344,6 +364,73 @@ export default function App() {
     ensureAudio();
     engineRef.current?.queueDir(d);
   }, []);
+
+  const handleStart = useCallback(async () => {
+    setOnlineNotice("");
+    try {
+      const profile = await getGuestProfile();
+      setGuestProfile(profile);
+      if (!profile) {
+        setUsernameValue("");
+        setUsernameError("");
+        setPendingStart(true);
+        setUsernameOpen(true);
+        return;
+      }
+    } catch (error) {
+      setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
+    }
+    startGame();
+  }, [startGame]);
+
+  const handleEditUsername = useCallback(async () => {
+    setUsernameError("");
+    try {
+      const profile = await getGuestProfile();
+      setGuestProfile(profile);
+      setUsernameValue(profile?.username ?? "");
+      setPendingStart(false);
+      setUsernameOpen(true);
+    } catch (error) {
+      setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
+    }
+  }, []);
+
+  const handleSaveUsername = useCallback(async () => {
+    setUsernameSaving(true);
+    setUsernameError("");
+    try {
+      const profile = await saveGuestUsername(usernameValue);
+      setGuestProfile(profile);
+      setUsernameOpen(false);
+      if (pendingStart) startGame();
+      setPendingStart(false);
+    } catch (error) {
+      setUsernameError(error instanceof Error ? error.message : "Could not save username.");
+    } finally {
+      setUsernameSaving(false);
+    }
+  }, [usernameValue, pendingStart, startGame]);
+
+  const loadGlobalScores = useCallback(async (period = leaderboardPeriod) => {
+    setLeaderboardStatus("loading");
+    setLeaderboardError("");
+    try {
+      const profile = await getGuestProfile();
+      setGuestProfile(profile);
+      const entries = await getGlobalLeaderboard(period);
+      setGlobalEntries(entries);
+      setLeaderboardStatus("ready");
+    } catch (error) {
+      setLeaderboardError(error instanceof Error ? error.message : "Leaderboard unavailable.");
+      setLeaderboardStatus("error");
+    }
+  }, [leaderboardPeriod]);
+
+  const openLeaderboard = useCallback(() => {
+    setLeaderboardOpen(true);
+    void loadGlobalScores(leaderboardPeriod);
+  }, [loadGlobalScores, leaderboardPeriod]);
 
   const actionsRef = useRef({ startGame, pauseGame, resumeGame, quitToMenu });
   actionsRef.current = { startGame, pauseGame, resumeGame, quitToMenu };
@@ -601,9 +688,40 @@ export default function App() {
         <StartScreen
           scores={scores}
           muted={muted}
-          onStart={() => startGame()}
+          onStart={handleStart}
           onToggleMute={doToggleMute}
           isTouch={isTouch}
+        />
+      )}
+      {screen === "menu" && (
+        <div className="absolute right-3 top-3 z-30 flex gap-2">
+          <button className="btn btn-green px-3 py-2 text-[10px]" onClick={(event) => { event.stopPropagation(); openLeaderboard(); }}>WORLD RANK</button>
+          <button className="btn btn-ghost px-3 py-2 text-[10px]" onClick={(event) => { event.stopPropagation(); void handleEditUsername(); }}>{guestProfile ? "EDIT NAME" : "SET NAME"}</button>
+        </div>
+      )}
+      {onlineNotice && screen === "menu" && (
+        <div className="absolute bottom-3 left-1/2 z-30 -translate-x-1/2 rounded-lg border border-gold-400/40 bg-pine-900/95 px-3 py-2 text-center text-[10px] text-gold-300">{onlineNotice}</div>
+      )}
+      {leaderboardOpen && (
+        <LeaderboardPanel
+          entries={globalEntries}
+          period={leaderboardPeriod}
+          onPeriodChange={(period) => { setLeaderboardPeriod(period); void loadGlobalScores(period); }}
+          onClose={() => setLeaderboardOpen(false)}
+          status={leaderboardStatus}
+          error={leaderboardError}
+          onRefresh={() => { void loadGlobalScores(leaderboardPeriod); }}
+          username={guestProfile?.username ?? null}
+        />
+      )}
+      {usernameOpen && (
+        <UsernamePanel
+          value={usernameValue}
+          onChange={setUsernameValue}
+          onSave={() => { void handleSaveUsername(); }}
+          onClose={() => { setUsernameOpen(false); setPendingStart(false); }}
+          error={usernameError}
+          saving={usernameSaving}
         />
       )}
       {screen === "paused" && (
