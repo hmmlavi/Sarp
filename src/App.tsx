@@ -773,8 +773,6 @@ export default function App() {
           apples={finalStats.apples}
           length={finalStats.length}
           isNewBest={isNewBest}
-          scores={scores}
-          highlightId={highlightId}
           globalEntries={globalEntries}
           globalStatus={leaderboardStatus}
           globalError={leaderboardError}
