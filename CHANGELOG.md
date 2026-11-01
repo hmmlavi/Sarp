@@ -19,7 +19,7 @@
 - Top 10 rankings plus each guest's own world rank.
 - Dense ranking for tied scores, with earlier achieved scores listed first.
 - Weekly leaderboard rollover every Monday at 00:00 UTC.
-- Server-side username moderation and score-submission validation.
+- Consistent server-side username format validation and score-submission validation.
 - A retryable unavailable state that keeps local gameplay and scores independent from the online service.
 
 ### Unchanged
