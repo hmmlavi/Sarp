@@ -6,7 +6,7 @@
 
 Eat. Grow. Chase the next high score.
 
-[**▶ Play Sarp**](https://sarp3d.vercel.app/) · [Report a bug](https://github.com/hmmlavi/Sarp/issues) · [View source](https://github.com/hmmlavi/Sarp)
+[**▶ Play Sarp**](https://sarp-kappa.vercel.app/) · [Report a bug](https://github.com/hmmlavi/Sarp/issues) · [View source](https://github.com/hmmlavi/Sarp)
 
 ![Version](https://img.shields.io/badge/version-1.1.1-7c5cff?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=111827)
@@ -75,7 +75,7 @@ Sarp includes optional worldwide **All-time** and **This week** leaderboards.
 
 - Choose a public username when starting your first run. You can change it later from the menu. Usernames are 2–24 characters and can contain letters, numbers, spaces, underscores, dots, and hyphens.
 - No email, password, or social login is needed. Sarp uses an anonymous guest session.
-- Only a new personal-best run is submitted.
+- Every completed run is sent to the server; only personal-best improvements are stored.
 - The board shows the Top 10 and your own rank if you are outside the Top 10.
 - Tied scores share a rank; the earlier achieved score appears first.
 - Weekly rankings reset every Monday at 00:00 UTC.
@@ -105,6 +105,7 @@ Open the local address printed by Vite.
 ### Production build
 
 ~~~bash
+npm run typecheck
 npm run build
 npm run preview
 ~~~
@@ -135,6 +136,7 @@ src/
 
 docs/
 ├── screenshots/     # Game screenshots
+├── RELEASING.md     # Versioning and GitHub release process
 └── social-preview.png
 ~~~
 
@@ -145,12 +147,12 @@ Found a bug or have an idea? Open an [issue](https://github.com/hmmlavi/Sarp/iss
 For meaningful changes:
 1. Keep the game playable if online features are unavailable.
 2. Avoid breaking local scores and achievements.
-3. Test the production build with npm run build.
+3. Run `npm run typecheck` and `npm run build`.
 4. Include screenshots or a short recording for visual changes.
 
 ## 📋 Version history
 
-See the [changelog](CHANGELOG.md) for release notes and notable changes.
+See the [changelog](CHANGELOG.md) for release notes and [release instructions](docs/RELEASING.md) for publishing a new version.
 
 ## 👤 Created by
 
@@ -162,6 +164,6 @@ See the [changelog](CHANGELOG.md) for release notes and notable changes.
 
 **Thanks for checking out Sarp. Have fun, and beat your best!**
 
-[▶ Play now](https://sarp3d.vercel.app/)
+[▶ Play now](https://sarp-kappa.vercel.app/)
 
 </div>
