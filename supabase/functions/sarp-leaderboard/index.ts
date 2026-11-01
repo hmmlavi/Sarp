@@ -37,7 +37,7 @@ Deno.serve(async (req: Request) => {
     }
     if (body?.action === "profile_save") {
       const username = typeof body.username === "string" ? body.username.trim() : "";
-      if (!/^[A-Za-z0-9_]{3,16}$/.test(username)) return json({ error: "Username must be 3–16 characters using letters, numbers, or _." }, 400);
+      if (!/^[\p{L}\p{N} _.\-]{2,24}$/u.test(username)) return json({ error: "Name must be 2–24 characters. Use letters, numbers, spaces, _, . or -." }, 400);
       const { data, error } = await admin.from("sarp_players").upsert({ id: user.id, username }, { onConflict: "id" }).select("id, username, created_at, updated_at").single();
       if (error) {
         if (String(error.message).toLowerCase().includes("username")) return json({ error: "That username is not allowed. Please choose another." }, 400);
