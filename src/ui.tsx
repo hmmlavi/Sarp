@@ -676,8 +676,6 @@ export function GameOverScreen({
   apples,
   length,
   isNewBest,
-  scores,
-  highlightId,
   globalEntries,
   globalStatus,
   globalError,
@@ -688,8 +686,6 @@ export function GameOverScreen({
   apples: number;
   length: number;
   isNewBest: boolean;
-  scores: ScoreEntry[];
-  highlightId: string | null;
   globalEntries: { rank: number; username: string; score: number; is_you: boolean }[];
   globalStatus: "idle" | "loading" | "ready" | "error";
   globalError: string;
