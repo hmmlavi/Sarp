@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.1 — 2026-11-01
+
+### Fixed
+- Nickname fields now accept normal typing without game keyboard shortcuts intercepting letters.
+- Removed the unnecessary cooldown when changing a guest username.
+
+### Improved
+- Completed-run score submissions update global personal-best rankings.
+- Game Over now shows the global leaderboard while local scores remain available on the menu.
+- Improved nickname input behavior and guest-auth failure handling.
+
 ## 1.1.0 — 2026-11-01
 
 ### Added
