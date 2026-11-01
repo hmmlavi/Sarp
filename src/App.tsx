@@ -242,6 +242,26 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      setLeaderboardStatus("loading");
+      try {
+        const profile = await getGuestProfile();
+        const entries = await getGlobalLeaderboard("all_time");
+        if (!active) return;
+        setGuestProfile(profile);
+        setGlobalEntries(entries);
+        setLeaderboardStatus("ready");
+      } catch (error) {
+        if (!active) return;
+        setLeaderboardStatus("error");
+        setLeaderboardError(error instanceof Error ? error.message : "Leaderboard unavailable.");
+      }
+    })();
+    return () => { active = false; };
+  }, []);
+
   /* ---------------- music ---------------- */
 
   useEffect(() => {
@@ -703,7 +723,9 @@ export default function App() {
       {/* screens */}
       {screen === "menu" && (
         <StartScreen
-          scores={scores}
+          entries={globalEntries}
+          status={leaderboardStatus}
+          username={guestProfile?.username ?? null}
           muted={muted}
           onStart={handleStart}
           onToggleMute={doToggleMute}
