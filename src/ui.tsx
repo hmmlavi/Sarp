@@ -647,6 +647,9 @@ export function GameOverScreen({
   isNewBest,
   scores,
   highlightId,
+  globalEntries,
+  globalStatus,
+  globalError,
   onRestart,
   onQuit,
 }: {
@@ -656,6 +659,9 @@ export function GameOverScreen({
   isNewBest: boolean;
   scores: ScoreEntry[];
   highlightId: string | null;
+  globalEntries: { rank: number; username: string; score: number; is_you: boolean }[];
+  globalStatus: "idle" | "loading" | "ready" | "error";
+  globalError: string;
   onRestart: () => void;
   onQuit: () => void;
 }) {
@@ -696,9 +702,20 @@ export function GameOverScreen({
           <div className="mt-4 text-left">
             <div className="flex items-center gap-2 text-gold-400 mb-1.5 justify-center">
               <IconTrophy className="w-4 h-4" />
-              <h3 className="font-display text-xs tracking-[0.2em]">LOCAL LEGENDS</h3>
+              <h3 className="font-display text-xs tracking-[0.2em]">WORLD LEADERBOARD</h3>
+              <span className="text-[9px] text-milk-dim">ALL-TIME</span>
             </div>
-            <ScoreTable scores={scores} limit={5} highlightId={highlightId} />
+            {globalStatus === "loading" && <p className="py-4 text-center text-xs text-milk-dim">Syncing your score…</p>}
+            {globalStatus === "error" && <p role="status" className="py-3 text-center text-xs text-gold-300">{globalError || "Online leaderboard unavailable. Your local score is saved."}</p>}
+            {globalStatus === "ready" && globalEntries.length === 0 && <p className="py-4 text-center text-xs text-milk-dim">No global scores yet. Be the first!</p>}
+            {globalStatus === "ready" && globalEntries.slice(0, 5).map((entry) => (
+              <div key={entry.rank + ":" + entry.username} className={`flex items-center gap-2 border-b border-pine-800 px-2 py-2 ${entry.is_you ? "bg-neon-400/10" : ""}`}>
+                <span className="w-7 font-display text-xs text-gold-300">#{entry.rank}</span>
+                <span className="min-w-0 flex-1 truncate text-xs font-bold text-milk">{entry.username}{entry.is_you ? " (YOU)" : ""}</span>
+                <span className="font-display text-xs text-neon-300">{entry.score.toLocaleString()}</span>
+              </div>
+            ))}
+            {globalStatus !== "error" && <p className="mt-2 text-center text-[9px] text-milk-dim">Your local high scores remain saved on this device.</p>}
           </div>
 
           <div className="flex gap-2 mt-5">
