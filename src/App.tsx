@@ -396,20 +396,15 @@ export default function App() {
 
   const handleStart = useCallback(async () => {
     setOnlineNotice("");
+    let profile: GuestProfile | null;
     try {
-      const profile = await getGuestProfile();
+      profile = await getGuestProfile();
       setGuestProfile(profile);
-      if (!profile) {
-        setUsernameValue("");
-        setUsernameError("");
-        setPendingStart(true);
-        setUsernameOpen(true);
-        return;
-      }
     } catch (error) {
       setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
       return;
     }
+
     if (!profile) {
       setUsernameValue("");
       setUsernameError("");
@@ -417,6 +412,7 @@ export default function App() {
       setUsernameOpen(true);
       return;
     }
+
     startGame();
   }, [startGame]);
 
