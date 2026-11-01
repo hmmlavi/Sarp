@@ -101,6 +101,7 @@ src/
   ui.tsx           Menus, HUD, and overlays
   index.css        App styling
   game/            Three.js engine, effects, audio, scores, and achievements
+  online/          Guest sessions and global leaderboard UI/API client
   utils/           Shared utilities
 docs/
   screenshots/     Captures of the deployed game
