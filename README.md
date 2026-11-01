@@ -73,7 +73,7 @@ No installation or account is needed to play. Open the game and start a run.
 
 Sarp includes optional worldwide **All-time** and **This week** leaderboards.
 
-- Choose a public username when starting your first run. Usernames are 3–16 characters and can contain letters, numbers, and underscores.
+- Choose a public username when starting your first run. You can change it later from the menu. Usernames are 2–24 characters and can contain letters, numbers, spaces, underscores, dots, and hyphens.
 - No email, password, or social login is needed. Sarp uses an anonymous guest session.
 - Only a new personal-best run is submitted.
 - The board shows the Top 10 and your own rank if you are outside the Top 10.
