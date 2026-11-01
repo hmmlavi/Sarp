@@ -222,14 +222,23 @@ export default function App() {
       setIsNewBest(best);
       setFlashKey((f) => f + 1);
       setScreen("over");
-      if (best) {
-        sfx.best();
-        if (guestProfile) {
-          void submitGlobalScore(e.score, e.apples, e.length).catch((error) => {
-            setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
+      if (best) sfx.best();
+      else sfx.over();
+
+      // Submit every completed run; the server keeps only personal-best improvements.
+      if (guestProfile) {
+        setLeaderboardStatus("loading");
+        void submitGlobalScore(e.score, e.apples, e.length)
+          .then(() => getGlobalLeaderboard("all_time"))
+          .then((entries) => {
+            setGlobalEntries(entries);
+            setLeaderboardStatus("ready");
+          })
+          .catch((error) => {
+            setLeaderboardStatus("error");
+            setLeaderboardError(error instanceof Error ? error.message : "Leaderboard unavailable.");
           });
-        }
-      } else sfx.over();
+      }
     }
   };
 
@@ -379,6 +388,14 @@ export default function App() {
       }
     } catch (error) {
       setOnlineNotice(error instanceof Error ? error.message : "Leaderboard unavailable.");
+      return;
+    }
+    if (!profile) {
+      setUsernameValue("");
+      setUsernameError("");
+      setPendingStart(true);
+      setUsernameOpen(true);
+      return;
     }
     startGame();
   }, [startGame]);
@@ -740,6 +757,9 @@ export default function App() {
           isNewBest={isNewBest}
           scores={scores}
           highlightId={highlightId}
+          globalEntries={globalEntries}
+          globalStatus={leaderboardStatus}
+          globalError={leaderboardError}
           onRestart={() => startGame()}
           onQuit={quitToMenu}
         />
