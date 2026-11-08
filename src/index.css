@@ -4,24 +4,24 @@
   --font-display: "Bungee", "Chakra Petch", sans-serif;
   --font-sans: "Chakra Petch", ui-sans-serif, sans-serif;
 
-  --color-pine-950: #04120c;
-  --color-pine-900: #07231a;
-  --color-pine-850: #092b20;
-  --color-pine-800: #0b3225;
-  --color-pine-700: #114732;
-  --color-pine-600: #1a5c40;
-  --color-moss-500: #21835a;
-  --color-neon-500: #17c973;
-  --color-neon-400: #2ee88d;
-  --color-neon-300: #6bffb4;
+  --color-pine-950: #071321;
+  --color-pine-900: #0b1d32;
+  --color-pine-850: #102842;
+  --color-pine-800: #153550;
+  --color-pine-700: #1d4969;
+  --color-pine-600: #285d80;
+  --color-moss-500: #3b789b;
+  --color-neon-500: #4d9bc4;
+  --color-neon-400: #72b8dc;
+  --color-neon-300: #a6d8ee;
   --color-gold-500: #eda116;
   --color-gold-400: #ffc93c;
   --color-gold-300: #ffe08a;
   --color-apple-400: #ff5a4e;
   --color-apple-500: #ff4040;
   --color-apple-600: #d92424;
-  --color-milk: #eafff0;
-  --color-milk-dim: #9fd4b8;
+  --color-milk: #eaf6fc;
+  --color-milk-dim: #a9c7d8;
 }
 
 html,
@@ -46,11 +46,11 @@ body {
 
 .panel {
   position: relative;
-  background: rgba(7, 35, 26, 0.94);
+  background: rgba(11, 29, 50, 0.95);
   border: 2px solid var(--color-pine-600);
   border-radius: 10px;
   box-shadow:
-    0 5px 0 #03150e,
+    0 5px 0 #030b16,
     0 14px 34px rgba(0, 0, 0, 0.5);
 }
 .panel::after {
@@ -61,7 +61,7 @@ body {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(180, 255, 215, 0.035) 0 1px,
+    rgba(190, 225, 245, 0.04) 0 1px,
     transparent 1px 3px
   );
 }
@@ -107,19 +107,19 @@ body {
   background: var(--color-pine-700);
   color: var(--color-neon-300);
   border-color: var(--color-moss-500);
-  box-shadow: 0 5px 0 #03150e;
+  box-shadow: 0 5px 0 #030b16;
 }
 .btn-green:active {
-  box-shadow: 0 1px 0 #03150e;
+  box-shadow: 0 1px 0 #030b16;
 }
 .btn-ghost {
-  background: rgba(9, 43, 32, 0.72);
+  background: rgba(16, 40, 66, 0.78);
   color: var(--color-milk-dim);
   border-color: var(--color-pine-600);
-  box-shadow: 0 5px 0 #03150e;
+  box-shadow: 0 5px 0 #030b16;
 }
 .btn-ghost:active {
-  box-shadow: 0 1px 0 #03150e;
+  box-shadow: 0 1px 0 #030b16;
 }
 
 .kbd {
@@ -127,9 +127,9 @@ body {
   font-weight: 700;
   font-size: 11px;
   line-height: 1;
-  color: #8df0c0;
+  color: #a6d8ee;
   background: var(--color-pine-800);
-  border: 1.5px solid #2a7a55;
+  border: 1.5px solid #477f9e;
   border-bottom-width: 3.5px;
   border-radius: 5px;
   padding: 3px 6px 2px;
@@ -139,10 +139,10 @@ body {
 .title-arcade {
   color: var(--color-gold-400);
   text-shadow:
-    0 3px 0 #0c4a2e,
-    0 6px 0 #06301d,
+    0 3px 0 #1b4c70,
+    0 6px 0 #102b46,
     0 14px 30px rgba(0, 0, 0, 0.65),
-    0 0 46px rgba(46, 232, 141, 0.3);
+    0 0 46px rgba(114, 184, 220, 0.24);
 }
 .title-red {
   color: var(--color-apple-500);
@@ -155,10 +155,10 @@ body {
 .title-green {
   color: var(--color-neon-400);
   text-shadow:
-    0 3px 0 #0c4a2e,
-    0 6px 0 #06301d,
+    0 3px 0 #1b4c70,
+    0 6px 0 #102b46,
     0 14px 30px rgba(0, 0, 0, 0.65),
-    0 0 46px rgba(46, 232, 141, 0.4);
+    0 0 46px rgba(114, 184, 220, 0.28);
 }
 
 .tabular {
@@ -341,7 +341,7 @@ body {
     90deg,
     #ff5a4e,
     #ffc93c,
-    #6bffb4,
+    #a6d8ee,
     #4fd4ff,
     #c084fc,
     #ff6ad5,
