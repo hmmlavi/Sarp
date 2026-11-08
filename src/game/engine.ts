@@ -1966,6 +1966,12 @@ export class SnakeEngine {
   private frame = (now: number) => {
     if (this.destroyed) return;
     this.raf = requestAnimationFrame(this.frame);
+
+    // The menu demo is intentionally a lightweight preview. Throttle the entire
+    // scene update to 30 FPS, not just WebGL rendering, to avoid doing 60 FPS
+    // animation work while the renderer only presents 30 frames.
+    if (this.state === "demo" && now - this.lastDemoRender < 1000 / 30) return;
+
     const dt = Math.min(0.05, (now - this.last) / 1000);
     this.last = now;
     this.tGlobal += dt;
@@ -2031,10 +2037,8 @@ export class SnakeEngine {
     this.fireflyMat.opacity =
       0.38 + Math.sin(this.tGlobal * 1.6) * 0.14 + this.discoMix * 0.22;
 
-    if (this.state !== "demo" || now - this.lastDemoRender >= 1000 / 30) {
-      this.renderer.render(this.scene, this.camera);
-      if (this.state === "demo") this.lastDemoRender = now;
-    }
+    this.renderer.render(this.scene, this.camera);
+    if (this.state === "demo") this.lastDemoRender = now;
   };
 
   private ensureSegs(n: number) {

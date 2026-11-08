@@ -25,19 +25,19 @@ export function UsernamePanel({
           type="text"
           autoFocus
           autoComplete="off"
-          autoCapitalize="none"
+          autoCapitalize="words"
           spellCheck={false}
           value={value}
           onChange={(event) => onChange(event.currentTarget.value)}
           onKeyDown={(event) => { if (event.key === "Enter" && !saving) { event.preventDefault(); onSave(); } }}
-          maxLength={24}
+          maxLength={32}
           minLength={2}
-          placeholder="YourUsername"
+          placeholder="Lakshit Lavi"
           aria-label="Player nickname"
           className="mt-4 w-full pointer-events-auto select-text rounded-lg border-2 border-pine-600 bg-pine-950 px-3 py-3 font-display text-sm text-milk outline-none focus:border-neon-400"
           style={{ userSelect: "text", WebkitUserSelect: "text" }}
         />
-        <p className="mt-2 text-[10px] text-milk-dim">2–24 characters · letters, numbers, spaces, _, . and -</p>
+        <p className="mt-2 text-[10px] text-milk-dim">2–32 characters · any language and punctuation (no line breaks)</p>
         {error && <p role="alert" className="mt-2 text-xs text-apple-400">{error}</p>}
         <div className="mt-4 flex gap-2">
           <button className="btn btn-ghost flex-1 px-3 py-3 text-xs" onClick={onClose}>CANCEL</button>
