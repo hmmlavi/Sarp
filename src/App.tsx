@@ -500,6 +500,14 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Never let global game shortcuts intercept text being entered in a form field.
+      const target = e.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable || target.closest("input, textarea, select, [contenteditable='true']"))
+      ) {
+        return;
+      }
       ensureAudio();
       const dir = KEY_DIRS[e.key];
       const k = e.key;
@@ -589,7 +597,7 @@ export default function App() {
         className="absolute inset-0 z-[5] pointer-events-none"
         style={{
           background:
-            "radial-gradient(120% 92% at 50% 42%, transparent 55%, rgba(2,10,7,0.6) 100%), linear-gradient(rgba(46,232,141,0.05), transparent 18%)",
+            "radial-gradient(120% 92% at 50% 42%, transparent 55%, rgba(3,10,22,0.62) 100%), linear-gradient(rgba(103,184,220,0.06), transparent 18%)",
         }}
       />
       <div
