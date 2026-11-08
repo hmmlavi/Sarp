@@ -225,13 +225,13 @@ export class SnakeEngine {
   private hemiLight!: THREE.HemisphereLight;
   private dirLight!: THREE.DirectionalLight;
   private discoWallColor = new THREE.Color();
-  private baseHemiSky = new THREE.Color(0xbfe8c8);
-  private baseHemiGround = new THREE.Color(0x0a2418);
+  private baseHemiSky = new THREE.Color(0xc5e2f2);
+  private baseHemiGround = new THREE.Color(0x10243a);
   private discoHemiSky = new THREE.Color(0xffd7f2);
   private discoHemiGround = new THREE.Color(0x2a1040);
   private baseDirColor = new THREE.Color(0xfff3d6);
   private discoDirColor = new THREE.Color(0xffe9a8);
-  private baseClearColor = new THREE.Color(0x04120c);
+  private baseClearColor = new THREE.Color(0x071321);
   private tmpColor = new THREE.Color();
   private radialTex!: THREE.CanvasTexture;
 
@@ -282,7 +282,7 @@ export class SnakeEngine {
   private shakeT = 0;
   private wallMats: THREE.MeshStandardMaterial[] = [];
   private wallFlash = 0;
-  private wallBaseEmissive = new THREE.Color("#16c97a");
+  private wallBaseEmissive = new THREE.Color("#5badd5");
   private wallRedEmissive = new THREE.Color("#ff2e22");
   private fireflies!: THREE.Points;
   private fireflyMat!: THREE.PointsMaterial;
@@ -310,10 +310,10 @@ export class SnakeEngine {
     });
     const coarse = window.matchMedia?.("(pointer: coarse)").matches ?? false;
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.35));
-    this.renderer.setClearColor(0x04120c);
+    this.renderer.setClearColor(0x071321);
 
     this.camera = new THREE.PerspectiveCamera(48, 1, 0.1, 120);
-    this.scene.fog = new THREE.FogExp2(0x04120c, 0.012);
+    this.scene.fog = new THREE.FogExp2(0x071321, 0.012);
 
     this.radialTex = SnakeEngine.makeRadialTex();
     this.buildLights();
@@ -357,7 +357,7 @@ export class SnakeEngine {
   }
 
   private buildLights() {
-    this.hemiLight = new THREE.HemisphereLight(0xbfe8c8, 0x0a2418, 0.85);
+    this.hemiLight = new THREE.HemisphereLight(0xc5e2f2, 0x10243a, 0.85);
     this.scene.add(this.hemiLight);
     this.dirLight = new THREE.DirectionalLight(0xfff3d6, 1.15);
     this.dirLight.position.set(9, 16, 7);
@@ -371,12 +371,12 @@ export class SnakeEngine {
     const px = cv.width / GRID;
     for (let x = 0; x < GRID; x++) {
       for (let z = 0; z < GRID; z++) {
-        g.fillStyle = (x + z) % 2 === 0 ? "#0d3423" : "#0a2a1c";
+        g.fillStyle = (x + z) % 2 === 0 ? "#173650" : "#122b43";
         g.fillRect(x * px, z * px, px, px);
       }
     }
     // faint grid lines
-    g.strokeStyle = "rgba(46,232,141,0.07)";
+    g.strokeStyle = "rgba(135,195,225,0.09)";
     g.lineWidth = 2;
     for (let i = 0; i <= GRID; i++) {
       g.beginPath();
@@ -397,7 +397,7 @@ export class SnakeEngine {
     // edge vignette
     const vg = g.createRadialGradient(512, 512, 260, 512, 512, 760);
     vg.addColorStop(0, "rgba(0,0,0,0)");
-    vg.addColorStop(1, "rgba(2,12,8,0.55)");
+    vg.addColorStop(1, "rgba(3,10,22,0.58)");
     g.fillStyle = vg;
     g.fillRect(0, 0, cv.width, cv.height);
 
@@ -419,8 +419,8 @@ export class SnakeEngine {
     gcv.width = gcv.height = 256;
     const gg = gcv.getContext("2d")!;
     const rad = gg.createRadialGradient(128, 128, 8, 128, 128, 128);
-    rad.addColorStop(0, "rgba(26,205,128,0.5)");
-    rad.addColorStop(1, "rgba(26,205,128,0)");
+    rad.addColorStop(0, "rgba(82,160,205,0.32)");
+    rad.addColorStop(1, "rgba(82,160,205,0)");
     gg.fillStyle = rad;
     gg.fillRect(0, 0, 256, 256);
     const gtex = new THREE.CanvasTexture(gcv);
@@ -440,7 +440,7 @@ export class SnakeEngine {
 
   private buildWalls() {
     const mat = new THREE.MeshStandardMaterial({
-      color: 0x0a2c1f,
+      color: 0x142b43,
       roughness: 0.6,
       metalness: 0.15,
       emissive: this.wallBaseEmissive.clone(),
