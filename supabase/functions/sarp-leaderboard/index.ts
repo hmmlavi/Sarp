@@ -52,22 +52,20 @@ Deno.serve(async (req: Request) => {
     }
 
     if (body?.action === "profile_save") {
-      const username = typeof body.username === "string" ? body.username.trim() : "";
-      if (username.length < 2 || username.length > 24) {
-        return json({ error: "Name must be 2–24 characters." }, 400);
+      const username = typeof body.username === "string"
+        ? body.username.normalize("NFC").trim()
+        : "";
+      const usernameLength = Array.from(username).length;
+      if (
+        usernameLength < 2 ||
+        usernameLength > 32 ||
+        /[\u0000-\u001f\u007f-\u009f]/u.test(username)
+      ) {
+        return json({ error: "Name must be 2–32 characters and cannot contain control characters or line breaks." }, 400);
       }
 
-      // The database validator is the single source of truth for allowed characters.
-      const { data: allowed, error: validationError } = await admin.rpc(
-        "sarp_username_is_allowed",
-        { p_username: username },
-      );
-      if (validationError) throw validationError;
-      if (allowed !== true) {
-        return json({
-          error: "Use only letters, numbers, spaces, underscores (_), dots (.) or hyphens (-).",
-        }, 400);
-      }
+      // Keep the database and API rules aligned. The database migration broadens
+      // the validator to accept Unicode names and ordinary punctuation.
 
       const { data, error } = await admin
         .from("sarp_players")
