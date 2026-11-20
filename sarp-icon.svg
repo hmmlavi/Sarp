@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="arena" x1="86" y1="92" x2="421" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5EE7B0" stop-opacity=".20"/>
+      <stop offset="1" stop-color="#0B6B4B" stop-opacity=".06"/>
+    </linearGradient>
+    <linearGradient id="body" x1="128" y1="372" x2="366" y2="147" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08734F"/>
+      <stop offset=".48" stop-color="#13A875"/>
+      <stop offset="1" stop-color="#8AF0B2"/>
+    </linearGradient>
+    <linearGradient id="head" x1="321" y1="113" x2="412" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5F77B"/>
+      <stop offset="1" stop-color="#43D58C"/>
+    </linearGradient>
+    <linearGradient id="lime" x1="173" y1="340" x2="230" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D4FF75"/>
+      <stop offset="1" stop-color="#8BEA54"/>
+    </linearGradient>
+    <filter id="shadow" x="55" y="64" width="410" height="395" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9"/>
+      <feOffset dy="8"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".22"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- A quiet, faceted hint of the game's arena -->
+  <path d="M256 48 446 158v196L256 464 66 354V158L256 48Z" fill="url(#arena)" stroke="#35B987" stroke-opacity=".22" stroke-width="3"/>
+  <path d="m256 48 0 416M66 158l380 196M446 158 66 354" stroke="#55D9A0" stroke-opacity=".10" stroke-width="2"/>
+  <path d="m113 185 143-82 143 82v142l-143 82-143-82V185Z" stroke="#63E4A8" stroke-opacity=".16" stroke-width="2"/>
+
+  <g filter="url(#shadow)">
+    <!-- Continuous S-shaped body -->
+    <path d="M150 366
+      C174 405 244 405 278 365
+      C304 334 289 297 250 279
+      L206 258
+      C161 236 154 194 182 159
+      C211 123 268 115 321 139"
+      stroke="#064B38" stroke-width="79" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M150 366
+      C174 405 244 405 278 365
+      C304 334 289 297 250 279
+      L206 258
+      C161 236 154 194 182 159
+      C211 123 268 115 321 139"
+      stroke="url(#body)" stroke-width="66" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Segment seams, kept broad for small-size clarity -->
+    <path d="M199 388c11-14 17-28 18-43" stroke="#075B40" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+    <path d="M280 325c-13 5-27 4-40-2" stroke="#075B40" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+    <path d="M173 219c13-2 27 1 39 8" stroke="#075B40" stroke-width="7" stroke-linecap="round" opacity=".62"/>
+    <path d="M233 128c8-5 18-8 28-9" stroke="#C8FFD9" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+
+    <!-- Tail tip -->
+    <path d="M126 341c-12 12-15 28-5 42 8 12 22 17 37 12l17-7-32-42-17-5Z" fill="#0A8057"/>
+    <path d="m133 351 24 31" stroke="#75E7A7" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+
+    <!-- Distinctive forward-facing head -->
+    <path d="M310 106c24-19 66-15 87 8 21 23 19 59-5 79-22 19-57 17-79-4-23-22-25-60-3-83Z" fill="url(#head)" stroke="#07543D" stroke-width="10"/>
+    <path d="M329 116c18-10 39-8 53 4" stroke="#E0FFC1" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+    <ellipse cx="373" cy="148" rx="7.5" ry="10" fill="#063F30"/>
+    <circle cx="376" cy="144" r="2.5" fill="#E9FFD8"/>
+    <path d="M398 167c-8 7-18 10-28 9" stroke="#0C744F" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+
+    <!-- Single restrained apple cue -->
+    <circle cx="121" cy="137" r="24" fill="#D8FF79" stroke="#0B6848" stroke-width="7"/>
+    <path d="M121 111c1-10 8-16 18-17" stroke="#0B6848" stroke-width="6" stroke-linecap="round"/>
+    <path d="M137 96c11-1 17 5 18 14-9 3-17 0-21-7" fill="#65D88A"/>
+    <path d="M110 133c3-6 7-9 12-10" stroke="#F5FFD0" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+  </g>
+</svg>
