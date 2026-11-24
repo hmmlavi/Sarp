@@ -3,7 +3,6 @@ import type { ReactNode, PointerEvent as RPointerEvent, MouseEvent as RMouseEven
 import { cn } from "./utils/cn";
 import type { DirName } from "./game/engine";
 import type { ScoreEntry } from "./game/scores";
-import type { GlobalScore } from "./online/leaderboard";
 
 /* ------------------------------------------------- icons */
 
@@ -482,17 +481,11 @@ function MuteButton({ muted, onToggleMute }: { muted: boolean; onToggleMute: () 
 }
 
 export function StartScreen({
-  entries,
-  status,
-  username,
   muted,
   onStart,
   onToggleMute,
   isTouch,
 }: {
-  entries: GlobalScore[];
-  status: "idle" | "loading" | "ready" | "error";
-  username: string | null;
   muted: boolean;
   onStart: () => void;
   onToggleMute: () => void;
@@ -502,7 +495,7 @@ export function StartScreen({
     <div className="absolute inset-0 z-20 overflow-y-auto bg-pine-950/55" onClick={onStart}>
       <MuteButton muted={muted} onToggleMute={onToggleMute} />
       <div className="min-h-full flex flex-col items-center justify-center px-4 py-10">
-        <div className="w-full max-w-4xl grid md:grid-cols-[1.15fr_0.85fr] gap-5 md:gap-8 items-center">
+        <div className="w-full max-w-2xl items-center">
           {/* left — title & start */}
           <div className="rise-in text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-md border-2 border-pine-600 bg-pine-900/90 px-2.5 py-1 text-[10px] font-bold tracking-[0.3em] text-neon-300">
@@ -586,45 +579,7 @@ export function StartScreen({
             </div>
           </div>
 
-          {/* right — live global leaderboard */}
-          <div
-            className="panel p-4 rise-in"
-            style={{ animationDelay: "120ms" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 text-gold-400 mb-2">
-              <IconTrophy className="w-4 h-4" />
-              <h2 className="font-display text-sm tracking-[0.2em]">GLOBAL LEADERBOARD</h2>
-              <span className="ml-auto text-[10px] text-milk-dim font-semibold">TOP 5</span>
-            </div>
-            {status === "loading" && <p className="py-8 text-center text-xs text-milk-dim">Loading world rankings…</p>}
-            {status === "error" && <p className="py-8 text-center text-xs text-gold-300">Leaderboard temporarily unavailable.</p>}
-            {status === "ready" && (
-              <>
-                {entries.filter((entry) => entry.rank <= 5).length === 0
-                  ? <p className="py-6 text-center text-xs text-milk-dim">No global scores yet. Be the first!</p>
-                  : entries.filter((entry) => entry.rank <= 5).map((entry) => (
-                    <div key={entry.rank + ":" + entry.username} className={cn("flex items-center gap-2 border-b border-pine-800 py-2 px-1", entry.is_you && "bg-neon-400/10 rounded")}>
-                      <span className="w-7 font-display text-sm text-gold-300">#{entry.rank}</span>
-                      <span className="min-w-0 flex-1 truncate text-xs font-bold text-milk">{entry.username}{entry.is_you ? " (YOU)" : ""}</span>
-                      <span className="font-display text-sm tabular text-neon-300">{entry.score.toLocaleString()}</span>
-                    </div>
-                  ))}
-                {(() => {
-                  const mine = entries.find((entry) => entry.is_you);
-                  return mine
-                    ? <div className="mt-3 rounded-md border border-neon-400/40 bg-neon-400/10 px-3 py-2">
-                        <div className="text-[9px] font-bold tracking-[0.2em] text-neon-300">YOUR RANKING</div>
-                        <div className="mt-1 flex items-center justify-between gap-2">
-                          <span className="truncate text-xs font-bold text-milk">{mine.username}</span>
-                          <span className="shrink-0 font-display text-sm text-gold-300">#{mine.rank} · {mine.score.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    : <p className="mt-3 text-center text-[10px] text-milk-dim">{username ? "Play a run to get your ranking." : "Set a player name and play to get ranked."}</p>;
-                })()}
-              </>
-            )}
-          </div>
+
         </div>
       </div>
     </div>
@@ -676,9 +631,6 @@ export function GameOverScreen({
   apples,
   length,
   isNewBest,
-  globalEntries,
-  globalStatus,
-  globalError,
   onRestart,
   onQuit,
 }: {
@@ -686,9 +638,6 @@ export function GameOverScreen({
   apples: number;
   length: number;
   isNewBest: boolean;
-  globalEntries: { rank: number; username: string; score: number; is_you: boolean }[];
-  globalStatus: "idle" | "loading" | "ready" | "error";
-  globalError: string;
   onRestart: () => void;
   onQuit: () => void;
 }) {
@@ -726,24 +675,7 @@ export function GameOverScreen({
             </div>
           </div>
 
-          <div className="mt-4 text-left">
-            <div className="flex items-center gap-2 text-gold-400 mb-1.5 justify-center">
-              <IconTrophy className="w-4 h-4" />
-              <h3 className="font-display text-xs tracking-[0.2em]">WORLD LEADERBOARD</h3>
-              <span className="text-[9px] text-milk-dim">ALL-TIME</span>
-            </div>
-            {globalStatus === "loading" && <p className="py-4 text-center text-xs text-milk-dim">Syncing your score…</p>}
-            {globalStatus === "error" && <p role="status" className="py-3 text-center text-xs text-gold-300">{globalError || "Online leaderboard unavailable. Your local score is saved."}</p>}
-            {globalStatus === "ready" && globalEntries.length === 0 && <p className="py-4 text-center text-xs text-milk-dim">No global scores yet. Be the first!</p>}
-            {globalStatus === "ready" && globalEntries.slice(0, 5).map((entry) => (
-              <div key={entry.rank + ":" + entry.username} className={`flex items-center gap-2 border-b border-pine-800 px-2 py-2 ${entry.is_you ? "bg-neon-400/10" : ""}`}>
-                <span className="w-7 font-display text-xs text-gold-300">#{entry.rank}</span>
-                <span className="min-w-0 flex-1 truncate text-xs font-bold text-milk">{entry.username}{entry.is_you ? " (YOU)" : ""}</span>
-                <span className="font-display text-xs text-neon-300">{entry.score.toLocaleString()}</span>
-              </div>
-            ))}
-            {globalStatus !== "error" && <p className="mt-2 text-center text-[9px] text-milk-dim">Your local high scores remain saved on this device.</p>}
-          </div>
+          <p className="mt-4 text-center text-[10px] text-milk-dim">Your high scores are saved locally on this device.</p>
 
           <div className="flex gap-2 mt-5">
             <button className="btn btn-gold flex-1 px-4 py-3 text-sm" onClick={onRestart}>
