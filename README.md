@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🐍 Sarp
+<p align="center"><img src="public/assets/branding/sarp.svg" alt="Sarp logo" width="144"></p>
+
+# Sarp
 
 ### A fast-paced 3D Snake game with a little more personality.
 

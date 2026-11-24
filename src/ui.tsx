@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import type { ReactNode, PointerEvent as RPointerEvent, MouseEvent as RMouseEvent } from "react";
 import { cn } from "./utils/cn";
 import type { DirName } from "./game/engine";
-import type { ScoreEntry } from "./game/scores";
 
 /* ------------------------------------------------- icons */
 
@@ -75,65 +74,6 @@ export const IconChevron = ({ className }: IconProps) => (
 
 export function KeyCap({ children }: { children: ReactNode }) {
   return <kbd className="kbd">{children}</kbd>;
-}
-
-export function ScoreTable({
-  scores,
-  limit = 5,
-  highlightId,
-}: {
-  scores: ScoreEntry[];
-  limit?: number;
-  highlightId?: string | null;
-}) {
-  if (!scores.length) {
-    return (
-      <p className="text-sm text-milk-dim py-3 text-center">
-        No runs yet — set the pace.
-      </p>
-    );
-  }
-  const rankColor = ["text-gold-400", "text-[#cfd8d3]", "text-[#d8a05c]"];
-  return (
-    <div>
-      {scores.slice(0, limit).map((s, i) => {
-        const hl = s.id === highlightId;
-        return (
-          <div
-            key={s.id}
-            style={{ animationDelay: `${i * 60}ms` }}
-            className={cn(
-              "score-row-in flex items-center gap-2.5 py-1.5 px-2",
-              i < scores.slice(0, limit).length - 1 && "border-b border-pine-700/70",
-              hl && "rounded-md border-2 border-gold-400/60 bg-gold-400/10 my-0.5"
-            )}
-          >
-            <span className={cn("font-display text-sm w-5 text-center", rankColor[i] ?? "text-milk-dim")}>
-              {i + 1}
-            </span>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-bold tabular text-milk leading-none text-[15px]">
-                  {s.score.toLocaleString()}
-                </span>
-                {hl && (
-                  <span className="font-display text-[8px] tracking-widest text-gold-300 bg-gold-400/20 rounded px-1 py-0.5">
-                    YOU
-                  </span>
-                )}
-              </div>
-              <div className="text-[10px] text-milk-dim mt-0.5">
-                {s.apples} apples · length {s.len}
-              </div>
-            </div>
-            <span className="text-[10px] text-milk-dim/80 whitespace-nowrap">
-              {new Date(s.date).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
 }
 
 /* ------------------------------------------------- HUD */
@@ -498,7 +438,13 @@ export function StartScreen({
         <div className="w-full max-w-2xl items-center">
           {/* left — title & start */}
           <div className="rise-in text-center md:text-left">
-            <div className="inline-flex items-center gap-2 rounded-md border-2 border-pine-600 bg-pine-900/90 px-2.5 py-1 text-[10px] font-bold tracking-[0.3em] text-neon-300">
+            <img
+            src="/assets/branding/sarp.svg"
+            alt="Sarp logo"
+            className="w-24 h-24 sm:w-28 sm:h-28 mx-auto md:mx-0 object-contain drop-shadow-[0_10px_24px_rgba(46,232,141,0.18)]"
+            draggable={false}
+          />
+          <div className="inline-flex items-center gap-2 rounded-md border-2 border-pine-600 bg-pine-900/90 px-2.5 py-1 text-[10px] font-bold tracking-[0.3em] text-neon-300">
               <span className="w-1.5 h-1.5 rounded-full bg-neon-400 animate-pulse" />
               3D SNAKE ARCADE
             </div>

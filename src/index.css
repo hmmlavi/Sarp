@@ -292,20 +292,6 @@ body {
   animation: streakPulse 0.5s ease-in-out infinite;
 }
 
-@keyframes scoreRowIn {
-  from {
-    opacity: 0;
-    transform: translateX(-14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.score-row-in {
-  animation: scoreRowIn 0.35s ease-out both;
-}
-
 /* ---------- rainbow mode ---------- */
 
 @keyframes rainbowSlide {
