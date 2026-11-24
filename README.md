@@ -20,7 +20,7 @@ Eat. Grow. Chase the next high score.
 
 ## 🎮 What is Sarp?
 
-Sarp is a browser-based 3D take on the classic Snake game. Guide your snake around a compact arena, collect apples, build combos, and survive as the pace gets faster. Special apples, changing weather, sound, skins, achievements, and worldwide leaderboards make every run a little different.
+Sarp is a browser-based 3D take on the classic Snake game. Guide your snake around a compact arena, collect apples, build combos, and survive as the pace gets faster. Special apples, changing weather, sound, skins, achievements, and local high scores make every run a little different.
 
 No installation or account is needed to play. Open the game and start a run.
 
@@ -36,7 +36,6 @@ No installation or account is needed to play. Open the game and start a run.
 - **Personal style** — multiple snake skins and changing weather effects.
 - **Sound** — procedurally generated music and sound effects, with an in-game toggle.
 - **Achievements** — milestones to chase and a local top-five leaderboard.
-- **World leaderboard** — optional all-time and weekly rankings using anonymous guest profiles.
 - **Touch-friendly** — swipe controls and an on-screen direction pad for mobile.
 
 ## 📸 Screenshots
@@ -69,20 +68,9 @@ No installation or account is needed to play. Open the game and start a run.
 
 **Mobile:** Swipe in the direction you want to move, or use the on-screen direction pad. The center button pauses the game.
 
-## 🌍 Global leaderboard
+## 💾 Local progress
 
-Sarp includes optional worldwide **All-time** and **This week** leaderboards.
-
-- Choose a public username when starting your first run. You can change it later from the menu. Usernames are 2–24 characters and can contain letters, numbers, spaces, underscores, dots, and hyphens.
-- No email, password, or social login is needed. Sarp uses an anonymous guest session.
-- Every completed run is sent to the server; only personal-best improvements are stored.
-- The board shows the Top 10 and your own rank if you are outside the Top 10.
-- Tied scores share a rank; the earlier achieved score appears first.
-- Weekly rankings reset every Monday at 00:00 UTC.
-
-**A note about guest profiles:** Your guest identity is stored in this browser. Clearing site data or switching devices means you will lose access to that guest profile; there is currently no account recovery. Your username is public, but your guest ID is not shown.
-
-Local scores and achievements are stored separately in your browser. If the online service or your connection is unavailable, local gameplay remains playable.
+High scores and achievements are saved in your browser. Sarp runs as a single-player game and does not require an account, Supabase, or an online service.
 
 ## 🧰 Run locally
 
@@ -131,7 +119,6 @@ src/
 ├── ui.tsx           # Menus, HUD, and overlays
 ├── index.css        # Global styling
 ├── game/            # Three.js engine, effects, audio, scores, achievements
-├── online/          # Guest sessions and global leaderboard client
 └── utils/           # Shared utilities
 
 docs/
@@ -145,7 +132,7 @@ docs/
 Found a bug or have an idea? Open an [issue](https://github.com/hmmlavi/Sarp/issues) with steps to reproduce it, or submit a pull request.
 
 For meaningful changes:
-1. Keep the game playable if online features are unavailable.
+1. Keep gameplay and local progress working without network services.
 2. Avoid breaking local scores and achievements.
 3. Run `npm run typecheck` and `npm run build`.
 4. Include screenshots or a short recording for visual changes.
